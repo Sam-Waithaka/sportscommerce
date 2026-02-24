@@ -3,8 +3,8 @@
         "port": 5000
     },
     "templates": {
-        "location": "location",
-        "config": {
+        "location": "templates",
+         "config": {
             "layoutsDir": "templates",
             "defaultLayout": "main_layout.handlebars",
             "partialsDir": "templates"
