@@ -1,23 +1,28 @@
 import { readFileSync } from "fs";
-import { getEnviroment, Env } from "./enviroment";
+import { getEnvironment, Env } from "./enviroment";
 import { merge } from "./merge";
 
-const file = process.env.SERVER_CONFIG ?? 'server.config.json'
-const data = JSON.parse(readFileSync(file).toString())
+const file = process.env.SERVER_CONFIG ?? "server.config.json"
+const data = JSON.parse(readFileSync(file).toString());
 
-try{
-    const envFile = getEnviroment().toString()+ '.' + file
-    const envData = JSON.parse(readFileSync(envFile).toString())
-    merge(data, envData)
+
+try {
+    const envFile = getEnvironment().toString() + "." + file;
+    const envData = JSON.parse(readFileSync(envFile).toString());
+    merge(data, envData);
 } catch {
-
+    // do nothing - file doesn't exist or isn't readable
 }
+export const getConfig = (path: string, defaultVal: any = undefined) : any => {
+    const paths = path.split(":");
+    let val: any = data;
 
-export const getConfig = (path: string, defaultVal: any = undefined): any =>{
-    const paths = path.split(':')
-    let val = data
-    paths.forEach(p => val = val[p])
-    return val ?? defaultVal
+    for (const p of paths) {
+        if (val == null || !(p in val)) {
+            return defaultVal;
+        }
+        val = val[p];
+    }
+    return val ?? defaultVal;
 }
-
-export {getEnviroment, Env}
+export { getEnvironment, Env };

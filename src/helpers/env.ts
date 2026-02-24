@@ -1,5 +1,5 @@
-import { Env, getEnviroment } from "../config";
+import { Env, getEnvironment } from "../config";
 
 export const isDevelopment = (value: any)=>{
-    return getEnviroment() === Env.Development
+    return getEnvironment() === Env.Development
 }
